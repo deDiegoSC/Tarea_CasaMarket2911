@@ -1,7 +1,7 @@
 package org.example;
 
 import org.example.entities.Notificacion;
-import org.example.service.ServicioNotificacion;
+import org.example.service.NotificacionContexto;
 import org.example.strategy.*;
 
 import javax.swing.JOptionPane;
@@ -10,7 +10,8 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
 
-        ServicioNotificacion servicio = new ServicioNotificacion();
+        //Inicializo todos las dependencias
+        NotificacionContexto servicio = new NotificacionContexto();
         Notificador whatsapp = new Whatsapp();
         Notificador email = new Email();
         Notificador push = new Push();
@@ -26,6 +27,7 @@ public class Main {
                     JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]
             );
 //FIN MENU
+            //OPCION SALIR
             if (opcion == 2) {
                 JOptionPane.showMessageDialog(null,
                         "Fin");
@@ -34,18 +36,22 @@ public class Main {
 
             switch (opcion)
             {
+                //OPCTION DE ENVIAR POR UN SOLO CANAL
                 case 0:
                     enviarPorCanalUnico(servicio, whatsapp, email, push);
                     break;
+                //OPCION DE ENVIAR POR MUCHOS CANALES O EVENTOS
                 case 1:
                     enviarPorEvento(servicio, whatsapp, email, push);
                     break;
             }
         }
     }
-    private static void enviarPorCanalUnico(ServicioNotificacion servicio, Notificador whatsapp, Notificador email, Notificador push) {
+    //FORMULARIO DE ENVIO UNICO
+    private static void enviarPorCanalUnico(NotificacionContexto servicio, Notificador whatsapp, Notificador email, Notificador push) {
 
-        String[] canales = {"WhatsApp","Email","Push"};
+        //MENU
+        String[] canales = {"WhatsApp","Email","Push"};//OPCTIONES
         int canal = JOptionPane.showOptionDialog(null,
                 "Escoge el canal de envio:",
                 "CasaMarketNotificaciones",
@@ -55,34 +61,42 @@ public class Main {
                 canales,
                 canales[0]
         );
+        //OPCION INVALIDA
         if (canal == -1) return;
 
+        //PIDE EL NUMERO O DIRECCION DEPENDIENDO DE LA OPCION ESCOGIDA
         String destinatario = JOptionPane.showInputDialog(null, "Ingresar el destino:");
-
+        //COMPROBAR QUE NO ESTE VACIO
         if (destinatario == null) return;
 
+        //MENSAJE A ENVIAR
         String mensaje = JOptionPane.showInputDialog(null, "Ingrese el mensaje a enviar:", "");
-
+        //COMPROBAR QUE NO ESTE VACIO
         if (mensaje == null) return;
 
+        //SE CREA EL CUERPO DEL MENSAJE
         Notificacion notif = new Notificacion(destinatario, mensaje);
 
         switch (canal) {
+            //ALMACENANDO LA ESTRATEGIA REQUERIDA
             case 0:
+                //WHATSAPP
                 servicio.setEstrategia(whatsapp);
                 break;
             case 1:
+                //email
                 servicio.setEstrategia(email);
                 break;
             case 2:
+                //push
                 servicio.setEstrategia(push);
                 break;
         }
 
-        servicio.enviarNotificacion(notif);
+        servicio.enviarNotificacion(notif);//LLAMAMOS AL CONTEXTO CON EL CUERPO DE LA ESTRATEGIA
     }
 
-    private static void enviarPorEvento(ServicioNotificacion servicio, Notificador whatsapp, Notificador email, Notificador push)
+    private static void enviarPorEvento(NotificacionContexto servicio, Notificador whatsapp, Notificador email, Notificador push)
     {
 
         String[] eventos = {

@@ -7,7 +7,7 @@ import javax.swing.*;
 public class Email implements Notificador {
     
     @Override
-    public void notificar(Notificacion notificacion) {
+    public void notify(Notificacion notificacion) {
         String mensaje = "EMAIL\n" +
                         "Para: " + notificacion.getDestinatario() + "\n" +
                         "Mensaje: " + notificacion.getMensaje() + "\n\n" +
@@ -18,7 +18,7 @@ public class Email implements Notificador {
     }
     
     @Override
-    public String getNombreCanal() {
+    public String getCanal() {
         return "Email";
     }
 }

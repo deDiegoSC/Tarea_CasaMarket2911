@@ -8,7 +8,7 @@ import javax.swing.*;
 public class Whatsapp implements Notificador {
     
     @Override
-    public void notificar(Notificacion notificacion) {
+    public void notify(Notificacion notificacion) {
         String mensaje = "WHATSAP\n\n" +
                         "Para: " + notificacion.getDestinatario() + "\n" +
                         "Mensaje: " + notificacion.getMensaje() + "\n\n" +
@@ -19,7 +19,7 @@ public class Whatsapp implements Notificador {
     }
     
     @Override
-    public String getNombreCanal() {
+    public String getCanal() {
         return "WhatsApp";
     }
 }

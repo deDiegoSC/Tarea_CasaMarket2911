@@ -7,7 +7,7 @@ import javax.swing.*;
 
 public class Sms implements Notificador {
     @Override
-    public void notificar(Notificacion notificacion) {
+    public void notify(Notificacion notificacion) {
         String mensaje = "📱 SMS\n\n" +
                 "Para: " + notificacion.getDestinatario() + "\n" +
                 "Mensaje: " + notificacion.getMensaje() + "\n" +
@@ -17,7 +17,7 @@ public class Sms implements Notificador {
     }
 
     @Override
-    public String getNombreCanal() {
+    public String getCanal() {
         return "SMS";
     }
 }

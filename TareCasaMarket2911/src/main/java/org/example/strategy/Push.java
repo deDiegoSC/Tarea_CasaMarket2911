@@ -7,7 +7,7 @@ import javax.swing.*;
 public class Push implements Notificador {
     
     @Override
-    public void notificar(Notificacion notificacion) {
+    public void notify(Notificacion notificacion) {
         String mensaje = "PUSH\n" +
                         "Discpositvo: " + notificacion.getDestinatario() + "\n" +
                         "Mensaje: " + notificacion.getMensaje() + "\n\n" +
@@ -17,7 +17,7 @@ public class Push implements Notificador {
     }
     
     @Override
-    public String getNombreCanal() {
+    public String getCanal() {
         return "Push Notification";
     }
 }
